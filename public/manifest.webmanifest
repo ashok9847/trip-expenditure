@@ -1,0 +1,14 @@
+{
+  "name": "TripSplit",
+  "short_name": "TripSplit",
+  "description": "Split trip expenses with friends and settle up in the fewest payments.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#fafafa",
+  "theme_color": "#fafafa",
+  "icons": [
+    { "src": "favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

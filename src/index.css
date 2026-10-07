@@ -1,0 +1,152 @@
+@import 'tailwindcss';
+
+/* Class-based dark mode: <html class="dark"> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: 'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --color-pos: #059669;
+  --color-neg: #dc2626;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    font-feature-settings: 'cv11', 'ss01';
+    text-rendering: optimizeLegibility;
+  }
+  body {
+    @apply min-h-dvh bg-zinc-50 text-zinc-900 antialiased dark:bg-zinc-950 dark:text-zinc-100;
+  }
+  dialog {
+    padding: 0;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-zinc-900);
+    outline-offset: 2px;
+  }
+  .dark :focus-visible {
+    outline-color: var(--color-zinc-100);
+  }
+  input[type='checkbox'] {
+    accent-color: var(--color-zinc-900);
+  }
+  .dark input[type='checkbox'] {
+    accent-color: var(--color-zinc-100);
+  }
+}
+
+/* ---- Component utilities ------------------------------------------------ */
+@utility btn {
+  @apply inline-flex h-11 items-center justify-center gap-2 rounded-lg px-4 text-[15px] font-medium whitespace-nowrap transition-colors disabled:pointer-events-none disabled:opacity-40;
+}
+@utility btn-primary {
+  @apply btn bg-zinc-900 text-white hover:bg-zinc-800 active:bg-zinc-700 dark:bg-zinc-100 dark:text-zinc-900 dark:hover:bg-white;
+}
+@utility btn-secondary {
+  @apply btn border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 active:bg-zinc-100 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:hover:bg-zinc-800;
+}
+@utility btn-ghost {
+  @apply btn text-zinc-700 hover:bg-zinc-100 active:bg-zinc-200 dark:text-zinc-300 dark:hover:bg-zinc-800;
+}
+@utility btn-danger {
+  @apply btn bg-red-600 text-white hover:bg-red-700;
+}
+@utility icon-btn {
+  @apply inline-flex size-10 shrink-0 items-center justify-center rounded-lg text-zinc-500 transition-colors hover:bg-zinc-100 hover:text-zinc-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-100;
+}
+@utility input {
+  @apply block h-12 w-full rounded-lg border border-zinc-200 bg-white px-3.5 text-base text-zinc-900 transition-colors placeholder:text-zinc-400 hover:border-zinc-300 focus:border-zinc-900 focus:ring-4 focus:ring-zinc-900/5 focus:outline-none disabled:bg-zinc-50 disabled:text-zinc-400 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-100 dark:[color-scheme:dark] dark:hover:border-zinc-700 dark:focus:border-zinc-300 dark:focus:ring-white/5 dark:disabled:bg-zinc-900/50;
+  &[aria-invalid='true'] {
+    @apply border-red-500 focus:border-red-500 focus:ring-red-500/10;
+  }
+}
+@utility label {
+  @apply mb-1.5 block text-[13px] font-medium text-zinc-600 dark:text-zinc-400;
+}
+@utility field-error {
+  @apply mt-1.5 text-[13px] text-red-600 dark:text-red-400;
+}
+@utility card {
+  @apply rounded-xl border border-zinc-200 bg-white dark:border-zinc-800 dark:bg-zinc-900;
+}
+@utility eyebrow {
+  @apply text-xs font-medium tracking-wide text-zinc-500 uppercase dark:text-zinc-400;
+}
+@utility chip {
+  @apply inline-flex h-8 shrink-0 items-center gap-1.5 rounded-md border border-zinc-200 bg-white px-2.5 text-[13px] font-medium text-zinc-700 transition-colors hover:bg-zinc-50 dark:border-zinc-800 dark:bg-zinc-900 dark:text-zinc-300 dark:hover:bg-zinc-800;
+  &[aria-pressed='true'] {
+    @apply border-zinc-900 bg-zinc-900 text-white dark:border-zinc-100 dark:bg-zinc-100 dark:text-zinc-900;
+  }
+}
+@utility segmented {
+  @apply grid auto-cols-fr grid-flow-col gap-1 rounded-lg bg-zinc-100 p-1 dark:bg-zinc-800/70;
+  & > button {
+    @apply h-9 rounded-md px-3 text-sm font-medium text-zinc-600 transition-colors dark:text-zinc-400;
+  }
+  & > button[aria-checked='true'],
+  & > button[aria-selected='true'] {
+    @apply bg-white text-zinc-900 shadow-sm dark:bg-zinc-950 dark:text-zinc-100;
+  }
+}
+@utility list-row {
+  @apply flex min-h-14 w-full items-center gap-3 px-4 py-2.5 text-left;
+}
+@utility num {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.01em;
+}
+@utility pos {
+  @apply text-emerald-600 dark:text-emerald-400;
+}
+@utility neg {
+  @apply text-red-600 dark:text-red-400;
+}
+
+/* ---- Motion --------------------------------------------------------------- */
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.toast-in {
+  animation: toast-in 160ms ease-out;
+}
+
+@keyframes sheet-in {
+  from {
+    transform: translateY(16px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+dialog[open] {
+  animation: sheet-in 200ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes dash-flow {
+  to {
+    stroke-dashoffset: -20;
+  }
+}
+.flow {
+  stroke-dasharray: 6 4;
+  animation: dash-flow 1s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
